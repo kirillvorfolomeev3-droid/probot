@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ProBot Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --bg: #f8f9fd; --accent: #8e7dff; --text: #333; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; }
+        .sidebar { width: 250px; background: #fff; height: 100vh; border-right: 1px solid #eee; padding: 20px; position: fixed; }
+        .nav-link { padding: 12px; text-decoration: none; color: #666; display: flex; align-items: center; gap: 10px; border-radius: 10px; }
+        .nav-link.active { background: #f0edff; color: var(--accent); font-weight: bold; }
+        .main { margin-left: 270px; padding: 40px; width: 100%; }
+        .card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .log-item { padding: 8px; border-bottom: 1px solid #eee; font-size: 14px; }
+        .btn { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #eee; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>ProBot</h2>
+        <a href="/" class="nav-link {% if page=='home' %}active{% endif %}"><i class="fas fa-home"></i> Главная</a>
+        <a href="/perms" class="nav-link {% if page=='perms' %}active{% endif %}"><i class="fas fa-lock"></i> Доступы</a>
+        <a href="/audit" class="nav-link {% if page=='audit' %}active{% endif %}"><i class="fas fa-history"></i> Журнал аудита</a>
+    </div>
+
+    <div class="main">
+        {% if not user %}
+            <button onclick="location.href='/login'" class="btn">Войти через Discord</button>
+        {% else %}
+            {% if page == 'home' %}
+                <div class="card">
+                    <h3>Общие настройки</h3>
+                    <form action="/update" method="post">
+                        <input type="text" name="guild_id" placeholder="ID сервера" required>
+                        <input type="text" name="prefix" placeholder="Префикс">
+                        <button class="btn">Сохранить</button>
+                    </form>
+                </div>
+            {% elif page == 'audit' %}
+                <div class="card">
+                    <h3>Последние действия</h3>
+                    {% for log in logs|reverse %}
+                        <div class="log-item"><b>{{ log.time }}</b>: {{ log.user }} {{ log.action }}</div>
+                    {% endfor %}
+                </div>
+            {% elif page == 'perms' %}
+                <div class="card">
+                    <h3>Доступы к командам (ID Ролей)</h3>
+                    <form action="/update" method="post">
+                        <input type="text" name="guild_id" placeholder="ID сервера" required>
+                        <label>Кто может КИКАТЬ:</label>
+                        <input type="text" name="role_kick" placeholder="ID роли">
+                        <label>Кто может БАНИТЬ:</label>
+                        <input type="text" name="role_ban" placeholder="ID роли">
+                        <label>Кто может МУТИТЬ:</label>
+                        <input type="text" name="role_mute" placeholder="ID роли">
+                        <button class="btn">Сохранить права</button>
+                    </form>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
