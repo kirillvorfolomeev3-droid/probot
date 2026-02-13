@@ -1,10 +1,1 @@
 
-[audit_logs.json](https://github.com/user-attachments/files/25294359/audit_logs.json)
-[CHANGES.txt](https://github.com/user-attachments/files/25294360/CHANGES.txt)[settings_manager.py](https://github.com/user-attachments/files/25294368/settings_manager.py)
-[settings.json](https://github.com/user-attachments/files/25294367/settings.json)
-[requirements.txt](https://github.com/user-attachments/files/25294366/requirements.txt)
-[README.md](https://github.com/user-attachments/files/25294365/README.md)
-[QUICK_START.md](https://github.com/user-attachments/files/25294364/QUICK_START.md)
-[main.py](https://github.com/user-attachments/files/25294363/main.py)
-[dashboard.py](https://github.com/user-attachments/files/25294362/dashboard.py)
-[config.py](https://github.com/user-attachments/files/25294361/config.py)
